@@ -86,19 +86,24 @@ class CameraView: UIView, UIGestureRecognizerDelegate {
       )
     }
 
+    let screen_H = UIScreen.main.bounds.size.height
+    let isIPhoneX = screen_H >= 812
+    let safe_Bottom: CGFloat = isIPhoneX ? 34 : 0
+
     bottomContainer.g_pinDownward()
-    bottomContainer.g_pin(height: 80)
+    bottomContainer.g_pin(height: 80 + safe_Bottom)
     bottomView.g_pinEdges()
 
-    stackView.g_pin(on: .centerY, constant: -4)
+    stackView.g_pin(on: .centerY, constant: -4 - safe_Bottom / 2.0)
     stackView.g_pin(on: .left, constant: 38)
     stackView.g_pin(size: CGSize(width: 56, height: 56))
 
-    shutterButton.g_pinCenter()
+    shutterButton.g_pin(on: .centerX)
+    shutterButton.g_pin(on: .centerY, constant: -safe_Bottom / 2.0)
     shutterButton.g_pin(size: CGSize(width: 60, height: 60))
-    
-    doneButton.g_pin(on: .centerY)
-    doneButton.g_pin(on: .right, constant: -38)
+      
+      doneButton.g_pin(on: .centerY, constant: -safe_Bottom / 2.0)
+      doneButton.g_pin(on: .right, constant: -38)
 
     rotateOverlayView.g_pinEdges()
     blurView.g_pinEdges()
